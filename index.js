@@ -9,7 +9,7 @@ var  server = require('http').createServer(app);
 var  io = require('socket.io').listen(server);
 
 app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/public/cliente.html')
+    res.sendFile(__dirname + '/public/client.html')
   });
 
 var numConexion = 0;
@@ -30,20 +30,22 @@ var myPort = new SerialPort(portName, {
 ///Abrimos Puerto Serial
 myPort.on("open", function (RAWData) {
   console.log('Port Open, Arduino is connecting');
-
+  myPort.write("1");
   ///////////////////////////////////////////////////////////////////////////////////////
   ///Abrimos conexion por sockets
   io.sockets.on('connection', function(socket){
       numConexion += 1; //número de cliente
       console.log("Koneksi sebanyak: ", + numConexion +" pada port 3000"); 
-
+      myPort.write("1");
 
       myPort.on('data', function(data) {
+
         var RAWData = data.toString();
         RAWData = RAWData.replace(/(\r\n|\n|\r)/gm,"");
         console.log(RAWData);
 
-        var datahasil = RAWData.split(',');
+
+        var datahasil = RAWData.split(' ');
        // socket.broadcast.emit("data", datahasil[0] + datahasil[1]);
 
        socket.broadcast.emit("data", {datahasil:datahasil});
@@ -55,7 +57,7 @@ myPort.on("open", function (RAWData) {
       });
     //cliente desconectado:
     socket.on('disconnect', function(){
-        console.log('usuario: ' + numConexion + ' Desconectado');
+        console.log('Client :  ' + numConexion + ' Disconnect');
       numConexion -= 1;
     });
 

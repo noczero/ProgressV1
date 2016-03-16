@@ -73,7 +73,7 @@
                     $("#kecepatan").text(data.datahasil[4]); //Deklarasi Variable
                     $("#arah").text(data.datahasil[5]); //Deklarasi Variable
                 
-                    ctx.fillText(+ data.datahasil[0] ,x,y);
+                    ctx.fillText(+ data.datahasil[2] ,x,y);
                     ctx.fillText("°C",x+100,y);      
                 }); 
                 //Chart
@@ -84,7 +84,7 @@
                 var line1 = new TimeSeries();
                  // Añadimos el valor de la Temperatura al eje Y
                 setInterval(function() {
-                 line1.append(new Date().getTime(), datahasil[8]);      
+                 line1.append(new Date().getTime(), datahasil[2]);      
                  }, 5000);
 
                 // Add to SmoothieChart
