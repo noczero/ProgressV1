@@ -39,7 +39,7 @@
 </head>
 
 
-<body class="nav-md">
+<body class="nav-md" onload="update()">
 
   <div class="container body">
 
@@ -226,47 +226,47 @@
           <div class="animated flipInY col-md-2 col-sm-4 col-xs-4 tile_stats_count">
             <div class="left"></div>
             <div class="right">
-              <span class="count_top"><i class="fa fa-user"></i> Temperature</span>
-              <div class="count" id="temperature">2500</div>
+              <span class="count_top green"><i class="fa fa-clock-o"></i> Temperature</span>
+              <div class="count green" id="temperature">0</div>
             </div>
           </div>
           <div class="animated flipInY col-md-2 col-sm-4 col-xs-4 tile_stats_count">
             <div class="left"></div>
             <div class="right">
-              <span class="count_top"><i class="fa fa-clock-o"></i> Kelembaban </span>
-              <div class="count" id="kelembaban">123.50</div>
+              <span class="count_top red"><i class="fa fa-clock-o"></i> Kelembaban </span>
+              <div class="count red" id="kelembaban">0</div>
               
             </div>
           </div>
           <div class="animated flipInY col-md-2 col-sm-4 col-xs-4 tile_stats_count">
             <div class="left"></div>
             <div class="right">
-              <span class="count_top"><i class="fa fa-user"></i> Ketinggian </span>
-              <div class="count green" id="ketinggian">2,500</div>
+              <span class="count_top blue"><i class="fa fa-clock-o"></i> Ketinggian </span>
+              <div class="count blue" id="ketinggian">0</div>
               
             </div>
           </div>
           <div class="animated flipInY col-md-2 col-sm-4 col-xs-4 tile_stats_count">
             <div class="left"></div>
             <div class="right">
-              <span class="count_top"><i class="fa fa-user"></i> Tekanan</span>
-              <div class="count" id="tekanan">4,567</div>
+              <span class="count_top blue"><i class="fa fa-clock-o"></i> Tekanan</span>
+              <div class="count blue" id="tekanan">0</div>
               
             </div>
           </div>
           <div class="animated flipInY col-md-2 col-sm-4 col-xs-4 tile_stats_count">
             <div class="left"></div>
             <div class="right">
-              <span class="count_top"><i class="fa fa-user"></i> Kecepatan</span>
-              <div class="count" id="kecepatan">2,315</div>
+              <span class="count_top red"><i class="fa fa-clock-o"></i> Kecepatan</span>
+              <div class="count red" id="kecepatan">0</div>
               
             </div>
           </div>
           <div class="animated flipInY col-md-2 col-sm-4 col-xs-4 tile_stats_count">
             <div class="left"></div>
             <div class="right">
-              <span class="count_top"><i class="fa fa-user"></i> Arah</span>
-              <div class="count" id="arah">7,325</div>
+              <span class="count_top green"><i class="fa fa-clock-o"></i> Arah</span>
+              <div class="count green" id="arah">0</div>
               
             </div>
           </div>
@@ -1007,19 +1007,6 @@
   <script type="text/javascript" src="js/flot/jquery.flot.resize.js"></script>
 
 
-  <!-- Serial Communication Begin -->
-    <script src="/socket.io/socket.io.js"></script>
-
-    <script>
-      var datahasil;
-      var temperature;
-
-      //Mulai
-
-
-    </script>
-
-  <!-- Serial Communication End -->
 
 
 
@@ -1265,5 +1252,37 @@
   <!-- /datepicker -->
   <!-- /footer content -->
 </body>
+
+
+  <!-- Serial Communication Begin -->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+      var datahasil;
+      var temperature;
+
+      //Mulai
+      function update() {
+        // body...
+        var socket = io.connect();
+
+        socket.on("data", function(data){
+          //Deklarasi Variable;
+          //ke ID
+          $("#temperature").text(data.datahasil[3]);
+          $("#kelembaban").text(data.datahasil[4]);
+          $("#ketinggian").text(data.datahasil[5]);
+          $("#tekanan").text(data.datahasil[6]);
+          $("#kecepatan").text(data.datahasil[7]);
+          $("#arah").text(data.datahasil[8]);
+
+
+        });
+
+      }
+
+    </script>
+
+  <!-- Serial Communication End -->
 
 </html>
